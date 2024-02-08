@@ -9,6 +9,10 @@ export default function FavList() {
         dispatch({ type: "FETCH_FAVS" });
     }, []);
 
+    const assignCategory = (e) => {
+        
+    }
+
     return (
         <>
             <h1>IN FavList</h1>
