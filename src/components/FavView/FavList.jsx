@@ -20,9 +20,8 @@ export default function FavList() {
             <h1>IN FavList</h1>
             <ul>{favoriteList.length === 0 ? <h2>Loading...</h2> :
                 favoriteList.map(gif => (
-                    <div class="w3-container">
+                    <div className="w3-container">
                         <li key={gif.id}><img src={gif.gif_url} /></li>
-                        
                             <div className="w3-dropdown-hover w3-light-grey">
                                 {/* button text conditionally renders based on what is in store. dropdowns set store */}
                             <button className="w3-button">Assign Catgory</button>
