@@ -6,7 +6,8 @@ export default function FavList () {
     const favoriteList = useSelector(store => store.favoriteList);
 
     useEffect(() => {
-        dispatch({type: "FETCH_FAVES"});
+        dispatch({type: "FETCH_FAVS"});
+        alert(JSON.stringify(favoriteList));
     }, []);
     
     return (
