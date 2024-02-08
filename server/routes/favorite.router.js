@@ -1,9 +1,8 @@
 const express = require("express");
 const pool = require("../modules/pool");
-
 const router = express.Router();
 
-// return all favorite images
+// return all favorite images TESTED IN POSTMAN
 router.get("/", (req, res) => {
   const queryText = `
     SELECT * FROM "favorites";
