@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 export default function FavList() {
     const dispatch = useDispatch();
     const favoriteList = useSelector(store => store.favoriteList);
+    const categories = useSelector(store => store.categoryList);
 
     useEffect(() => {
         dispatch({ type: "FETCH_FAVS" });
+        dispatch({ type: "FETCH_CATEGORIES"});
     }, []);
 
     const assignCategory = (e) => {
@@ -25,11 +27,10 @@ export default function FavList() {
                                 {/* button text conditionally renders based on what is in store. dropdowns set store */}
                             <button className="w3-button">Assign Catgory</button>
                             <div className="w3-dropdown-content w3-bar-block w3-border">
-                                <button class="w3-bar-item w3-button">Wild</button>
-                                <button class="w3-bar-item w3-button">Uproarious</button>
-                                <button class="w3-bar-item w3-button">Poignant</button>
-                                <button class="w3-bar-item w3-button">Felicitous</button>
-                                <button class="w3-bar-item w3-button">Whimsical</button>
+                                {categories.length === 0 ? <h2>Loading...</h2> : 
+                                categories.map(category => (
+                                    <button className="w3-bar-item w3-button">{category.name}</button>
+                                ))}
                             </div>
                         </div>
                     </div>
