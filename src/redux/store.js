@@ -75,7 +75,7 @@ function* setCategorySaga(action) {
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
-  combineReducers({ REDUCERHERE }),
+  combineReducers({ gifList, favoriteList }),
   applyMiddleware(sagaMiddleware, logger)
 );
 
