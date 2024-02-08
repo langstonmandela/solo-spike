@@ -40,7 +40,7 @@ function* rootSaga() {
   yield takeEvery("POST_FAV", postFavSaga); // POST fav to db from form
   yield takeEvery("FETCH_CATEGORIES", fetchCategoriesSaga);
   yield takeEvery("SET_CATERGORY", setCategorySaga); // PUT the category id in the fav table for the specific item
-  // yield takeEvery("DELETE_FAV", deleteFavSaga)
+  yield takeEvery("DELETE_FAV", deleteFavSaga)
 }
 
 function* fetchGifSaga(action) {
@@ -91,6 +91,16 @@ function* setCategorySaga(action) {
     console.error('Error in PUT saga', error)
   }
 }
+
+function* deleteFavSaga(action) {
+    try {
+      const response = yield axios.delete(`/api/favorites/${action.payload}`);
+      console.log('respone', response.data);
+      yield put({type: 'FETCH_FAVS'});
+    } catch (error) {
+      console.error('Error in PUT saga', error)
+    }
+  }
 
 const sagaMiddleware = createSagaMiddleware();
 
