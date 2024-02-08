@@ -24,10 +24,21 @@ const favoriteList = (state = [], action) => {
   }
 };
 
+const categoryList = (state = [], action) => {
+  switch (action.type) {
+    case "DISPLAY_CATEGORIES":
+      return action.payload;
+    default:
+    return state;
+}
+ 
+}
+
 function* rootSaga() {
   yield takeEvery("FETCH_GIF", fetchGifSaga); // GET from giphy (with search params)
   yield takeEvery("FETCH_FAVS", fetchFavSaga); // GET from favorites table from db
   yield takeEvery("POST_FAV", postFavSaga); // POST fav to db from form
+  yield takeEvery("FETCH_CATEGORIES", fetchCategoriesSaga);
   yield takeEvery("SET_CATERGORY", setCategorySaga); // PUT the category id in the fav table for the specific item
   yield takeEvery("DELETE_FAV", deleteFavSaga)
 }
@@ -62,11 +73,20 @@ function* postFavSaga(action) {
   }
 }
 
+function* fetchCategoriesSaga() {
+  try {
+    const response = yield axios.get("/api/categories");
+    yield put({ type: "DISPLAY_CATEGORIES", payload: response.data });
+  } catch (error) {
+    console.error("Error in FetchCategoriesSaga", error);
+  }
+}
+
 function* setCategorySaga(action) {
   try {
     const response = yield axios.put(`/api/favorites/${action.payload}`);
     console.log('respone', response.data);
-    yield put({type: 'FETCH_FAVS'});
+    yield put({ type: 'FETCH_FAVS' });
   } catch (error) {
     console.error('Error in PUT saga', error)
   }
@@ -85,7 +105,7 @@ function* deleteFavSaga(action) {
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
-  combineReducers({ gifList, favoriteList }),
+  combineReducers({ gifList, favoriteList, categoryList }),
   applyMiddleware(sagaMiddleware, logger)
 );
 
