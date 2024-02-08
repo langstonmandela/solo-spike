@@ -1,8 +1,15 @@
-import { useState } from "react";
-import {useSelector} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 export default function FavListItem({gif}) {
-    
+    const dispatch = useDispatch();
     const categories = useSelector(store => store.categoryList);
+    
+    // Need to dispatch put request to updated text of button so that the images can be filtered later
+
+    const setCategory = (e) => {
+        dispatch({type: "SET_CATEGORY", payload: e.target.dataset.key});
+
+        // check with router. need to pass in gif id and category id to make this work.
+    }
 
     return (
     <>
@@ -15,7 +22,7 @@ export default function FavListItem({gif}) {
                 <div className="w3-dropdown-content w3-bar-block w3-border">
                     {categories.length === 0 ? <h2>Loading...</h2> :
                         categories.map(category => (
-                            <button key={category.id} className="w3-bar-item w3-button">{category.name}</button>
+                            <button onClick={(setCategory)} key={category.id} data-key={category.id} className="w3-bar-item w3-button">{category.name}</button>
                         ))}
                 </div>
             </div>

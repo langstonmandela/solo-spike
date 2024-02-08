@@ -44,7 +44,7 @@ router.put('/:id', (req, res) => {
   const updatedFav = req.body;
   // req.body should contain a category_id to add to this favorite image
   const queryText = `
-    UPDATE "plants"
+    UPDATE "favorites"
       SET 
         "category_id"=$1
       WHERE
