@@ -20,7 +20,7 @@ INSERT INTO "categories"
 
 CREATE TABLE "favorites" (
   "fav_id" SERIAL PRIMARY KEY,
-  "category_id" INT -- this can be null to start because we need to PUT it in here
+  "category_id" INT, -- this can be null to start because we need to PUT it in here
   "gif_url" VARCHAR (250) NOT NULL
 );
 
