@@ -2,7 +2,7 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
-// return all favorite images TESTED IN POSTMAN
+// return all favorite images TESTED IN POSTMAN --ANDREWS'S FAVLIST USEEFFECT
 router.get("/", (req, res) => {
   const queryText = `
     SELECT * FROM "favorites";
@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
     });
 });
 
-// add a new favorite TESTED IN POSTMAN
+// add a new favorite TESTED IN POSTMAN --SEID'S FAV BUTTON IN SEARCH VIEW
 router.post("/", (req, res) => {
   const newFav = req.body;
   const queryText = `
@@ -39,7 +39,7 @@ router.post("/", (req, res) => {
     });
 });
 
-// update a favorite's associated category
+// update a favorite's associated category --ANDREW'S CATEGORIZE BUTTON ON FAVLIST
 router.put('/:id', (req, res) => {
   const updatedFav = req.body;
   // req.body should contain a category_id to add to this favorite image
@@ -63,8 +63,12 @@ router.put('/:id', (req, res) => {
 });
 
 // delete a favorite THIS IS A STRETCH GOAL!!!!
-router.delete("/:id", (req, res) => {
-  res.sendStatus(200);
+router.delete('/:id', (req, res) => {
+  pool.query('DELETE FROM "favorites" WHERE id=$1', [req.params.id]).then((result) => {
+      res.sendStatus(200);
+  }).catch((error) => {
+      console.log('Error DELETE /api/favorites', error);
+      res.sendStatus(500);
+  })
 });
-
 module.exports = router;
