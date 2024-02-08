@@ -19,8 +19,16 @@ function App() {
       <Route path="/">
         <header className="App-header">
           <h1 className="App-title">GIPHY SEARCH</h1>
-          <button onClick={() => history.push('/')}>HOME</button>
-          <button onClick={() => history.push('/favorites')}>FAVORITE GIFS</button>
+          <ul>
+          <nav>
+          <li>
+          <Link to="/">HOME</Link>
+          </li>
+          <li>
+          <Link to="/favorites">FAVORITE GIFS</Link>
+          </li>
+        </nav>
+        </ul>
         </header>
       </Route>
       <Route path="/" exact>

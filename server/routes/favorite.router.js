@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
     });
 });
 
-// add a new favorite
+// add a new favorite TESTED IN POSTMAN
 router.post("/", (req, res) => {
   const newFav = req.body;
   const queryText = `
@@ -28,7 +28,7 @@ router.post("/", (req, res) => {
       VALUES
       ($1);
   `;
-  const queryValues = [newFav.url];
+  const queryValues = [newFav.gif_url];
   pool
     .query(queryText, queryValues)
     .then((result) => {
@@ -41,14 +41,9 @@ router.post("/", (req, res) => {
 });
 
 // update a favorite's associated category
-router.put("/:id", (req, res) => {
-  // req.body should contain a category_id to add to this favorite image
-  res.sendStatus(200);
-});
-
 router.put('/:id', (req, res) => {
   const updatedFav = req.body;
-
+  // req.body should contain a category_id to add to this favorite image
   const queryText = `
     UPDATE "plants"
       SET 
@@ -56,12 +51,10 @@ router.put('/:id', (req, res) => {
       WHERE
         id=$2;
   `;
-
   const queryValues = [
-    updatedFav.categoryID,
+    updatedFav.category_id,
     updatedFav.id
   ];
-
   pool.query(queryText, queryValues)
     .then((result) => { res.sendStatus(200); })
     .catch((err) => {
