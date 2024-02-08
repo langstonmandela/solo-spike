@@ -8,7 +8,6 @@ router.get("/", (req, res) => {
   axios
     .get(
       `http://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${searchText}`
-      
     )
     .then((response) => {
       res.send(response.data);
