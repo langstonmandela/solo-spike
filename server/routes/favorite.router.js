@@ -1,9 +1,8 @@
 const express = require("express");
 const pool = require("../modules/pool");
-
 const router = express.Router();
 
-// return all favorite images
+// return all favorite images TESTED IN POSTMAN
 router.get("/", (req, res) => {
   const queryText = `
     SELECT * FROM "favorites";
@@ -41,14 +40,9 @@ router.post("/", (req, res) => {
 });
 
 // update a favorite's associated category
-router.put("/:id", (req, res) => {
-  // req.body should contain a category_id to add to this favorite image
-  res.sendStatus(200);
-});
-
 router.put('/:id', (req, res) => {
   const updatedFav = req.body;
-
+  // req.body should contain a category_id to add to this favorite image
   const queryText = `
     UPDATE "plants"
       SET 
