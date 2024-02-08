@@ -6,18 +6,33 @@ import {
   Switch,
   Route,
   Link,
-  useParams
+  useParams,
 } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 
 function App() {
+  const history = useHistory();
+
   return (
-    <div>
-      <h1>Giphy Search!</h1>
-      <Form />
-      <List />
+    <Router>
+      <Route path="/">
+        <header className="App-header">
+          <h1 className="App-title">GIPHY SEARCH</h1>
+          <button onClick={() => history.push('/')}>HOME</button>
+          <button onClick={() => history.push('/favorites')}>FAVORITE GIFS</button>
+        </header>
+      </Route>
+      <Route path="/" exact>
+        <Form />
+        <List />
+      </Route>
+      <Route path='/favorites'>
       <FavList />
-    </div>
+      </Route>
+    </Router>
   );
 }
+
 
 export default App;
