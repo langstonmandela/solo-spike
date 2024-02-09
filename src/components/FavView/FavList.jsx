@@ -16,12 +16,11 @@ export default function FavList() {
     const filterFavorites = (e) => {
         if (e.target.textContent === "all") {
             setFilterCategory("");
+            dispatch({ type: "FETCH_FAVS" });
             return;
         }
         setFilterCategory(e.target.textContent);
-        // Need to send category_id
         dispatch({ type: "FILTER_FAV", payload: e.target.dataset.category});
-        alert(e.target.dataset.category);
     }
 
     return (
