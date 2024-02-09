@@ -29,7 +29,6 @@ export default function FavList() {
             <div className="w3-bar-item">Filter by:</div>
             <div className="w3-dropdown-hover w3-light-grey">
                     <span>
-                        {/* make filter work */}
                     <button className="w3-button">{filterCategory == "" ? "all" : filterCategory}</button></span>
                     <div className="w3-dropdown-content w3-bar-block w3-border">
                         <button onClick={(filterFavorites)} className="w3-bar-item w3-button">all</button>
@@ -39,7 +38,7 @@ export default function FavList() {
                             ))}
                     </div>
                 </div>
-            <ul>{favoriteList.length === 0 ? <h2>Loading...</h2> :
+            <ul>{favoriteList.length === 0 ? <h2>No Matches Found</h2> :
                 favoriteList.map(gif => (
                    <FavListItem gif={ gif }/>
                 ))}</ul>
