@@ -65,9 +65,9 @@ router.put("/:id", (req, res) => {
       SET 
         "category_id"=$1
       WHERE
-        id=$2;
+        "fav_id"=$2;
   `;
-  const queryValues = [updatedFav.category_id, updatedFav.id];
+  const queryValues = [updatedFav.category_id, updatedFav.fav_id];
   pool
     .query(queryText, queryValues)
     .then((result) => {
