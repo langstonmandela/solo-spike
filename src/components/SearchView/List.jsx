@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 // Error in POST /api/favorites error: null value in column "gif_url" of relation "favorites" violates not-null constraint
 export default function List () {
     const gifList = useSelector(s=>s.gifList);
-    console.log(gifList);
+    // console.log(gifList);
     //data[0].images.original.url
 
     let data = [
@@ -22,10 +22,11 @@ export default function List () {
 
     return (
         <>
-        <h1>IN LIST</h1>
-        {
-            data.map((gif,i)=><ListItem key={i} url={gif.images.original.url}/>)
+        <div className="w3-container">
+            {
+            gifList.data?.map((gif,i)=><ListItem key={i} url={gif.images.original.url} />)
         }
+        </div> 
         </>
     )
 }

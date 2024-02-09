@@ -10,13 +10,21 @@ export default function ListItem ({url}) {
 
     return (
         <>
-            <h1>IN ListITem</h1>
-            <div>
+            {/* <div>
                 <img src={url}/>
                 <button onClick={()=>{
                     likeGif(url)
                 }}>like</button>
+            </div> */}
+            <div className="w3-col s4 w3-center w3-margin-top w3-row-padding">
+                <div className="w3-card-4 w3-padding-32">
+                    <img style={{width: '350px', height: '300px'}} src={url} />
+                    <div className="w3-container w3-center">
+                        <p>The Italian / Austrian Alps</p>
+                    </div>
+                </div> 
             </div>
+            
         </>
         
         
