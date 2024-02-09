@@ -40,6 +40,7 @@ const categoryList = (state = [], action) => {
 function* rootSaga() {
   yield takeEvery("FETCH_GIF", fetchGifSaga); // GET from giphy (with search params)
   yield takeEvery("FETCH_FAVS", fetchFavSaga); // GET from favorites table from db
+
   yield takeEvery("POST_FAV", postFavSaga); // POST fav to db from form
   yield takeEvery("FETCH_CATEGORIES", fetchCategoriesSaga);
   yield takeEvery("SET_CATEGORY", setCategorySaga); // PUT the category id in the fav table for the specific item
@@ -72,7 +73,7 @@ function* fetchFavSaga(action) {
 //Generator to POST the GIF that was favorited in SearchView
 function* postFavSaga(action) {
   try {
-    const response = yield axios.post("/api/favorites");
+    const response = yield axios.post("/api/favorites",{gif_url: action.payload});
     console.log("respone", response.data);
     yield put({ type: "ADD_FAV", payload: response.data });
   } catch (error) {
