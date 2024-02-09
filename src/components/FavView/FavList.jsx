@@ -24,8 +24,9 @@ export default function FavList() {
             <div className="w3-dropdown-hover w3-light-grey">
                     <span>
                         {/* Conditionally render button text, make filter work */}
-                    <button className="w3-button">{filterCategory == "" ? "All" : filterCategory}</button></span>
+                    <button className="w3-button">{filterCategory == "" ? "all" : filterCategory}</button></span>
                     <div className="w3-dropdown-content w3-bar-block w3-border">
+                        <button onClick={(filterFavorites)} className="w3-bar-item w3-button">all</button>
                         {categories.length === 0 ? <h2>Loading...</h2> :
                             categories.map(category => (
                                 <button onClick={(filterFavorites)} key={category.id} data-category={category.id} className="w3-bar-item w3-button">{category.name}</button>
