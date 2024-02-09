@@ -27,7 +27,7 @@ const favoriteList = (state = [], action) => {
 function* rootSaga() {
   yield takeEvery("FETCH_GIF", fetchGifSaga); // GET from giphy (with search params)
   yield takeEvery("FETCH_FAVS", fetchFavSaga); // GET from favorites table from db
-  yield takeEvery("POST_FAV", postFavSaga); // POST fav to db from form
+  yield takeEvery("POST_FAV", postFavSaga); // POST fav to db from gif list
   yield takeEvery("SET_CATERGORY", setCategorySaga); // PUT the category id in the fav table for the specific item
   // yield takeEvery("DELETE_FAV", deleteFavSaga)
 }
@@ -54,7 +54,7 @@ function* fetchFavSaga(action) {
 
 function* postFavSaga(action) {
   try {
-    const response = yield axios.post("/api/favorites");
+    const response = yield axios.post("/api/favorites",{gif_url: action.payload});
     console.log("respone", response.data);
     yield put({ type: "ADD_FAV", payload: response.data });
   } catch (error) {

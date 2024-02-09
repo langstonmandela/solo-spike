@@ -28,7 +28,8 @@ router.post("/", (req, res) => {
       VALUES
       ($1);
   `;
-  const queryValues = [newFav.url];
+  console.log(newFav);
+  const queryValues = [newFav.gif_url];
   pool
     .query(queryText, queryValues)
     .then((result) => {
