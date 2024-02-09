@@ -34,7 +34,7 @@ function* rootSaga() {
 
 function* fetchGifSaga(action) {
   try {
-    const response = yield axios.get("/api/search");
+    const response = yield axios.get(`/api/search/${action.payload}`);
     console.log("response", response.data);
     yield put({ type: "DISPLAY_GIF", payload: response.data });
   } catch (error) {
