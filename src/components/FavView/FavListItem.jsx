@@ -1,11 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 export default function FavListItem({ gif }) {
     const dispatch = useDispatch();
     const categories = useSelector(store => store.categoryList);
+    const [assignedCategory, setAssignedCategory] = useState("");
 
     // Need to dispatch put request to updated text of button so that the images can be filtered later
     const setCategory = (e) => {
-        alert(e.target.closest("div").dataset.gifid);
         dispatch({ type: "SET_CATEGORY", payload: { category_id: e.target.dataset.category, id: e.target.closest("div").dataset.id } });
 
     }
