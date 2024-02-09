@@ -17,8 +17,7 @@ export default function FavListItem({ gif }) {
             <div className="w3-container">
                 <li key={gif.id}><img src={gif.gif_url} /></li>
                 <div className="w3-dropdown-hover w3-light-grey">
-                    <span><button className="w3-button">{assignedCategory === "" ? "Assign Category" : assignedCategory}</button>
-                        <button className="w3-button">Delete</button></span>
+                    <span><button className="w3-button">{assignedCategory === "" ? "Assign Category" : assignedCategory}</button></span>
                     <div data-gifid={gif.fav_id} className="w3-dropdown-content w3-bar-block w3-border">
                         {categories.length === 0 ? <h2>Loading...</h2> :
                             categories.map(category => (
@@ -26,6 +25,7 @@ export default function FavListItem({ gif }) {
                             ))}
                     </div>
                 </div>
+                <button className="w3-button w3-light-grey">Delete</button>
             </div>
         </>
     )
