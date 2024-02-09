@@ -93,7 +93,7 @@ function* fetchCategoriesSaga() {
 //Generator to SET the selected category from the dropdown menu
 function* setCategorySaga(action) {
   try {
-    const response = yield axios.put(`/api/favorites/${action.payload}`);
+    const response = yield axios.put(`/api/favorites/${action.payload.id}`, action.payload);
     console.log('respone', response.data);
     yield put({ type: 'FETCH_FAVS' });
   } catch (error) {
