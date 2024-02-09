@@ -24,7 +24,7 @@ export default function FavListItem({ gif }) {
                             ))}
                     </div>
                 </div>
-                <button className="w3-button w3-light-grey">Delete</button>
+                {/* <button className="w3-button w3-light-grey">Delete</button> */}
             </div>
         </>
     )
