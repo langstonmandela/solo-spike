@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 });
 
 //RETURN THE FILTERED CATEGORY
-router.get("/", (req, res) => {
+router.get("/:id", (req, res) => {
   const queryText = `
     SELECT * FROM "favorites"
     JOIN "categories" on "favorites"."category_id"="categories"."id"

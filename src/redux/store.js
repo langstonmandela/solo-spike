@@ -116,7 +116,7 @@ function* deleteFavSaga(action) {
   // Generator to FILTER the favs to displays the ones in the category
   function* filterFavSaga(action) {
     try {
-      const response = yield axios.get(`/api/favorites`);
+      const response = yield axios.get(`/api/favorites/${action.payload}`);
       console.log('respone', response.data);
       yield put({type: 'FETCH_FAVS'});
     } catch (error) {
