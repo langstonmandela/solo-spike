@@ -118,7 +118,7 @@ function* deleteFavSaga(action) {
     try {
       const response = yield axios.get(`/api/favorites/${action.payload}`);
       console.log('respone', response.data);
-      yield put({type: 'FETCH_FAVS'});
+      yield put({type: 'DISPLAY_FAVS', payload: response.data});
     } catch (error) {
       console.error('Error in PUT saga', error)
     }

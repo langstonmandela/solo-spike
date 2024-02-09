@@ -5,7 +5,6 @@ export default function FavListItem({ gif }) {
     const categories = useSelector(store => store.categoryList);
     const [assignedCategory, setAssignedCategory] = useState("");
 
-    // Need to dispatch put request to updated text of button so that the images can be filtered later
     const setCategory = (e) => {
         setAssignedCategory(e.target.textContent);
         dispatch({ type: "SET_CATEGORY", payload: { category_id: e.target.dataset.category, fav_id: e.target.closest("div").dataset.gifid } });

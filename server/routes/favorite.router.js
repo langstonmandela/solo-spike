@@ -27,10 +27,11 @@ router.get("/:id", (req, res) => {
   `;
   pool.query(queryText, [req.params.id])
     .then((result) => {
+      console.log("Successful filter GET!")
       res.send(result.rows);
     })
     .catch((err) => {
-      console.log("Error in GET /api/favorites", err);
+      console.log("Error in GET /api/favorites/:id", err);
       res.sendStatus(500);
     });
 });
