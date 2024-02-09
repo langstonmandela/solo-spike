@@ -43,8 +43,7 @@ function* rootSaga() {
 
   yield takeEvery("POST_FAV", postFavSaga); // POST fav to db from form
   yield takeEvery("FETCH_CATEGORIES", fetchCategoriesSaga);
-
-  yield takeEvery("SET_CATERGORY", setCategorySaga); // PUT the category id in the fav table for the specific item
+  yield takeEvery("SET_CATEGORY", setCategorySaga); // PUT the category id in the fav table for the specific item
   yield takeEvery("DELETE_FAV", deleteFavSaga) // DELETE the favorite from favorite list
   yield takeEvery("FILTER_FAV", filterFavSaga)
 }
@@ -95,6 +94,7 @@ function* fetchCategoriesSaga() {
 //Generator to SET the selected category from the dropdown menu
 function* setCategorySaga(action) {
   try {
+    console.log("In setCategorySaga");
     const response = yield axios.put(`/api/favorites/${action.payload.id}`, action.payload);
     console.log('respone', response.data);
     yield put({ type: 'FETCH_FAVS' });
