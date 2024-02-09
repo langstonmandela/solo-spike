@@ -7,7 +7,7 @@ export default function FavListItem({ gif }) {
 
     // Need to dispatch put request to updated text of button so that the images can be filtered later
     const setCategory = (e) => {
-        dispatch({ type: "SET_CATEGORY", payload: { category_id: e.target.dataset.category, id: e.target.closest("div").dataset.id } });
+        dispatch({ type: "SET_CATEGORY", payload: { category_id: e.target.dataset.category, fav_id: e.target.closest("div").dataset.gifid } });
 
     }
 
