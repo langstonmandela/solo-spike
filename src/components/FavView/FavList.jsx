@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FavListItem from "./FavListItem";
 
@@ -6,14 +6,15 @@ export default function FavList() {
     const dispatch = useDispatch();
     const favoriteList = useSelector(store => store.favoriteList);
     const categories = useSelector(store => store.categoryList);
+    const [filterCategory, setFilterCategory] = useState("");
 
     useEffect(() => {
         dispatch({ type: "FETCH_FAVS" });
         dispatch({ type: "FETCH_CATEGORIES"});
     }, []);
 
-    const filterFavorites = () => {
-
+    const filterFavorites = (e) => {
+        setFilterCategory(e.target.textContent);
     }
 
     return (
@@ -22,7 +23,8 @@ export default function FavList() {
             <div className="w3-bar-item">Filter by:</div>
             <div className="w3-dropdown-hover w3-light-grey">
                     <span>
-                    <button className="w3-button">Placeholder Text</button></span>
+                        {/* Conditionally render button text, make filter work */}
+                    <button className="w3-button">{filterCategory == "" ? "All" : filterCategory}</button></span>
                     <div className="w3-dropdown-content w3-bar-block w3-border">
                         {categories.length === 0 ? <h2>Loading...</h2> :
                             categories.map(category => (
