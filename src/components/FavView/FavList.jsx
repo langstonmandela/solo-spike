@@ -14,6 +14,9 @@ export default function FavList() {
     }, []);
 
     const filterFavorites = (e) => {
+        if (e.target.textContent === "all") {
+            setFilterCategory("");
+        }
         setFilterCategory(e.target.textContent);
     }
 
