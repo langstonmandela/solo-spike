@@ -44,6 +44,7 @@ function* rootSaga() {
   yield takeEvery("FETCH_CATEGORIES", fetchCategoriesSaga);
   yield takeEvery("SET_CATERGORY", setCategorySaga); // PUT the category id in the fav table for the specific item
   yield takeEvery("DELETE_FAV", deleteFavSaga) // DELETE the favorite from favorite list
+  yield takeEvery("FILTER_FAV", filterFavSaga)
 }
 
 //Generator to fetch the GIFs with the search param from GIPHY
@@ -104,6 +105,17 @@ function* setCategorySaga(action) {
 function* deleteFavSaga(action) {
     try {
       const response = yield axios.delete(`/api/favorites/${action.payload}`);
+      console.log('respone', response.data);
+      yield put({type: 'FETCH_FAVS'});
+    } catch (error) {
+      console.error('Error in PUT saga', error)
+    }
+  }
+
+  // Generator to FILTER the favs to displays the ones in the category
+  function* filterFavSaga(action) {
+    try {
+      const response = yield axios.get(`/api/favorites`);
       console.log('respone', response.data);
       yield put({type: 'FETCH_FAVS'});
     } catch (error) {
