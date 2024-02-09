@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 });
 
 //RETURN THE FILTERED CATEGORY
-router.get("/", (req, res) => {
+router.get("/:id", (req, res) => {
   const queryText = `
     SELECT * FROM "favorites"
     JOIN "categories" on "favorites"."category_id"="categories"."id"
@@ -27,10 +27,11 @@ router.get("/", (req, res) => {
   `;
   pool.query(queryText, [req.params.id])
     .then((result) => {
+      console.log("Successful filter GET!")
       res.send(result.rows);
     })
     .catch((err) => {
-      console.log("Error in GET /api/favorites", err);
+      console.log("Error in GET /api/favorites/:id", err);
       res.sendStatus(500);
     });
 });
