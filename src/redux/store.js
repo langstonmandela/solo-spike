@@ -4,6 +4,7 @@ import createSagaMiddleware from "redux-saga";
 import { takeEvery, put, take } from "redux-saga/effects";
 import axios from "axios";
 
+// Reducer for search results
 const gifList = (state = [], action) => {
   switch (action.type) {
     case "DISPLAY_GIF":
@@ -13,6 +14,7 @@ const gifList = (state = [], action) => {
   }
 };
 
+// Reducer for favorited GIFs
 const favoriteList = (state = [], action) => {
   switch (action.type) {
     case "DISPLAY_FAVS":
@@ -24,6 +26,7 @@ const favoriteList = (state = [], action) => {
   }
 };
 
+// Reducer for categories, used on FavView dropdown for each GIF
 const categoryList = (state = [], action) => {
   switch (action.type) {
     case "DISPLAY_CATEGORIES":
@@ -40,12 +43,14 @@ function* rootSaga() {
   yield takeEvery("POST_FAV", postFavSaga); // POST fav to db from form
   yield takeEvery("FETCH_CATEGORIES", fetchCategoriesSaga);
   yield takeEvery("SET_CATERGORY", setCategorySaga); // PUT the category id in the fav table for the specific item
-  // yield takeEvery("DELETE_FAV", deleteFavSaga)
+  yield takeEvery("DELETE_FAV", deleteFavSaga) // DELETE the favorite from favorite list
+  yield takeEvery("FILTER_FAV", filterFavSaga)
 }
 
+//Generator to fetch the GIFs with the search param from GIPHY
 function* fetchGifSaga(action) {
   try {
-    const response = yield axios.get("/api/search");
+    const response = yield axios.get(`/api/search/${action.payload}`);
     console.log("response", response.data);
     yield put({ type: "DISPLAY_GIF", payload: response.data });
   } catch (error) {
@@ -53,6 +58,7 @@ function* fetchGifSaga(action) {
   }
 }
 
+//Generator to fetch the favorited GIFS from the DB
 function* fetchFavSaga(action) {
   try {
     const response = yield axios.get("/api/favorites");
@@ -63,6 +69,7 @@ function* fetchFavSaga(action) {
   }
 }
 
+//Generator to POST the GIF that was favorited in SearchView
 function* postFavSaga(action) {
   try {
     const response = yield axios.post("/api/favorites");
@@ -73,6 +80,7 @@ function* postFavSaga(action) {
   }
 }
 
+// Generator to display categories beneath each GIF in FAVORITES (dropdown menu)
 function* fetchCategoriesSaga() {
   try {
     const response = yield axios.get("/api/categories");
@@ -82,15 +90,38 @@ function* fetchCategoriesSaga() {
   }
 }
 
+//Generator to SET the selected category from the dropdown menu
 function* setCategorySaga(action) {
   try {
-    const response = yield axios.put(`/api/favorites/${action.payload}`);
+    const response = yield axios.put(`/api/favorites/${action.payload.id}`, action.payload);
     console.log('respone', response.data);
     yield put({ type: 'FETCH_FAVS' });
   } catch (error) {
     console.error('Error in PUT saga', error)
   }
 }
+
+// Generator to DELETE the selected GIF from favs
+function* deleteFavSaga(action) {
+    try {
+      const response = yield axios.delete(`/api/favorites/${action.payload}`);
+      console.log('respone', response.data);
+      yield put({type: 'FETCH_FAVS'});
+    } catch (error) {
+      console.error('Error in PUT saga', error)
+    }
+  }
+
+  // Generator to FILTER the favs to displays the ones in the category
+  function* filterFavSaga(action) {
+    try {
+      const response = yield axios.get(`/api/favorites`);
+      console.log('respone', response.data);
+      yield put({type: 'FETCH_FAVS'});
+    } catch (error) {
+      console.error('Error in PUT saga', error)
+    }
+  }
 
 const sagaMiddleware = createSagaMiddleware();
 
