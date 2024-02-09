@@ -7,6 +7,7 @@ export default function FavListItem({ gif }) {
 
     // Need to dispatch put request to updated text of button so that the images can be filtered later
     const setCategory = (e) => {
+        setAssignedCategory(e.target.textContent);
         dispatch({ type: "SET_CATEGORY", payload: { category_id: e.target.dataset.category, fav_id: e.target.closest("div").dataset.gifid } });
 
     }
@@ -17,7 +18,7 @@ export default function FavListItem({ gif }) {
                 <li key={gif.id}><img src={gif.gif_url} /></li>
                 <div className="w3-dropdown-hover w3-light-grey">
                     {/* button text conditionally renders based on what is in store. dropdowns set store */}
-                    <span><button className="w3-button">Assign Catgory</button>
+                    <span><button className="w3-button">{assignedCategory === "" ? "Assign Category" : assignedCategory}</button>
                         <button className="w3-button">Delete</button></span>
                     <div data-gifid={gif.fav_id} className="w3-dropdown-content w3-bar-block w3-border">
                         {categories.length === 0 ? <h2>Loading...</h2> :
