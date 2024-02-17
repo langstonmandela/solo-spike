@@ -1,9 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { searchGifsRequest } from '../../redux/actions'; 
+import { faker } from '@faker-js/faker';
 
 export default function Form() {
     const dispatch = useDispatch();
+
+    console.log(faker); // This should log the faker object to the console
+    console.log(faker.internet.userName()); // This should log a generated username
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
