@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Child Profiles Data Generation</title>
+  <title>Data Generation</title>
   <style>
     textarea {
       width: 100%;
       height: 300px;
     }
+
     button {
       margin: 10px 0;
     }
   </style>
 </head>
+
 <body>
-  <h1>Child Profiles Data Generator</h1>
-  <button id="generateDataButton">Generate Child Profiles Data</button>
+  <h1>Fake Data Generator</h1>
+  <button id="generateAllData">Generate All Data</button>
   <textarea id="dataOutput"></textarea>
 
   <script type="module">
     import { faker } from 'https://cdn.jsdelivr.net/npm/@faker-js/faker/+esm';
+
+    function generateUsers(n) {
+      const users = [];
+      for (let i = 0; i < n; i++) {
+        users.push({
+          username: faker.internet.userName(),
+          password: faker.internet.password(),
+          role: 'divine_employee',
+          date_created: faker.date.past().toISOString()
+        });
+      }
+      return users;
+    }
 
     function generateChildProfiles(n) {
       const childProfiles = [];
@@ -29,20 +45,144 @@
           nick_name: faker.person.firstName(),
           last_name: faker.person.lastName(),
           date_of_birth: faker.date.past({ years: 10 }).toISOString(),
-          gender: faker.helpers.arrayElement(['male', 'female', 'non-binary', 'not specified']), // Corrected method
+          gender: 'female',
           date_of_placement: faker.date.past({ years: 1 }).toISOString(),
-          date_created: new Date().toISOString()
+          date_created: faker.date.past().toISOString()
         });
       }
       return childProfiles;
     }
 
+    function generateGuardianship(n) {
+      const guardianships = [];
+      for (let i = 0; i < n; i++) {
+        guardianships.push({
+          court_order_number: faker.string.uuid(),
+          cps_worker_name: faker.person.fullName(),
+          cps_worker_phone: faker.phone.phoneNumberFormat(),
+          cps_worker_email: faker.internet.email(),
+          date_created: faker.date.past().toISOString()
+        });
+      }
+      return guardianships;
+    }
+
+
+    function generateHealthHistory(n) {
+      const healthHistories = [];
+      for (let i = 0; i < n; i++) {
+        healthHistories.push({
+          current_pediatrician: faker.person.fullName(),
+          recent_doctor_visit: faker.datatype.boolean(),
+          pediatrician_contact: faker.phone.phoneNumberFormat(),
+          dental_checkup: faker.datatype.boolean(),
+          medications: faker.lorem.words(5),
+          chronic_illnesses: faker.lorem.words(5),
+          allergies: faker.lorem.words(3),
+          birth_complications: faker.datatype.boolean(),
+          developmental_delays: faker.lorem.words(4),
+          date_created: faker.date.past().toISOString()
+        });
+      }
+      return healthHistories;
+    }
+
+    function generateBehavioralHistory(n) {
+      const behavioralHistories = [];
+      for (let i = 0; i < n; i++) {
+        behavioralHistories.push({
+          reason_for_counseling: faker.lorem.sentence(),
+          previous_therapy: faker.datatype.boolean(),
+          trauma_history: faker.lorem.sentence(),
+          sexualized_behaviors: faker.datatype.boolean(),
+          bed_wetting: faker.datatype.boolean(),
+          sleep_changes: faker.lorem.words(2),
+          appetite_changes: faker.lorem.words(2),
+          date_created: faker.date.past().toISOString()
+        });
+      }
+      return behavioralHistories;
+    }
+
+    function generateFamilyHistory(n) {
+      const familyHistories = [];
+      for (let i = 0; i < n; i++) {
+        familyHistories.push({
+          substance_abuse_history: faker.lorem.sentence(),
+          mental_health_issues: faker.lorem.sentence(),
+          date_created: faker.date.past().toISOString()
+        });
+      }
+      return familyHistories;
+    }
+
+    function generateConsentForms(n) {
+      const consentForms = [];
+      for (let i = 0; i < n; i++) {
+        consentForms.push({
+          consent_type: faker.lorem.word(),
+          consent_given: faker.datatype.boolean(),
+          guardian_signature: faker.person.fullName(),
+          date_signed: faker.date.past().toISOString(),
+          date_created: faker.date.past().toISOString()
+        });
+      }
+      return consentForms;
+    }
+
+    function generateFinancialResponsibility(n) {
+      const financialResponsibilities = [];
+      for (let i = 0; i < n; i++) {
+        financialResponsibilities.push({
+          insurance_provider: faker.company.companyName(),
+          insurance_id: faker.string.uuid(),
+          medicaid_id: faker.string.uuid(),
+          fiscal_responsibility: faker.lorem.sentence(),
+          date_created: faker.date.past().toISOString()
+        });
+      }
+      return financialResponsibilities;
+    }
+
+    function generateAuthorization(n) {
+      const authorizations = [];
+      for (let i = 0; i < n; i++) {
+        authorizations.push({
+          authorization_type: 'information',
+          authorized_party: faker.person.fullName(),
+          disclosure_details: faker.lorem.sentence(),
+          date_created: faker.date.past().toISOString()
+        });
+      }
+      return authorizations;
+    }
+
+    function generateAllData() {
+      const data = {
+        users: generateUsers(3),
+        childProfiles: generateChildProfiles(3),
+        guardianships: generateGuardianship(3),
+        healthHistories: generateHealthHistory(3),
+        behavioralHistories: generateBehavioralHistory(3),
+        familyHistories: generateFamilyHistory(3),
+        consentForms: generateConsentForms(3),
+        financialResponsibilities: generateFinancialResponsibility(3),
+        authorizations: generateAuthorization(3)
+      };
+
+      const dataOutputElement = document.getElementById('dataOutput');
+      dataOutputElement.value = JSON.stringify(data, null, 2);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('generateDataButton').addEventListener('click', () => {
-        const data = generateChildProfiles(10); // Generate data for 10 child profiles
-        document.getElementById('dataOutput').value = JSON.stringify(data, null, 2);
-      });
+      const generateButton = document.getElementById('generateAllData');
+      if (generateButton) {
+        generateButton.addEventListener('click', generateAllData);
+      } else {
+        console.error('Generate button not found');
+      }
     });
-  </script>  
+  </script>
 </body>
+
 </html>
