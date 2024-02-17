@@ -1,63 +1,85 @@
-# Group Giphy Saga Project: Search and Favorites
+# Divine Passage: Child Welfare Management System
 
-This week you will be building a Giphy Searching and Favoriting application which allows the user to save images and sort them into categories.
+## Introduction
 
-In this project you will need to utilize React, Redux, Redux-Saga and integrate them with a third-party API. Once your team has established a solid starting point, be sure to use branches and pull requests to facilitate collaboration.
+Divine Passage is a cutting-edge Child Welfare Management System designed exclusively for Divine Institute's group homes. It acts as a pivotal entry point for managing the comprehensive needs of residents (children) transitioning into care. This system streamlines the process of documenting, tracking, and accessing vital information about each child, ensuring a smooth and supportive passage into their new environment.
 
-## Team Setup
+## Objectives
 
-**Do not clone this repository.** Instead, have one person create a new repo by clicking on the **Use this template** button to make a copy. Make your team collaborators on the new repo you have created. The rest of the team members that did not make the initial repo will **clone directly** from the person who created the new repo, **do not fork** the repo.
+- **Streamline Child Intake and Welfare Management**: Facilitate a seamless integration process for children entering Divine Institute's care, ensuring their immediate and long-term needs are addressed efficiently.
+- **Ensure Comprehensive Care for Residents**: Provide a robust framework for managing health, behavioral, and guardianship information, enabling personalized care plans.
+- **Support Guardian and Staff Engagement**: Enhance communication and information sharing between staff, guardians, and external stakeholders involved in a child's welfare.
+- **Lay Foundations for Scalable Growth**: Build a scalable and adaptable system that can evolve with the expanding needs of Divine Institute and its residents.
 
-## Create Database and Tables
+## Database Schema
 
-See the `database.sql` file for database setup and details. It offers some of the SQL to get you started but you'll need to set up your tables and the relationships between them.
+### Overview
 
-## Development Setup Instructions
+The Divine Passage system utilizes a relational database organized into several key tables, each designed to capture essential aspects of child welfare management.
 
-- Run `npm install`.
-    - Be sure to take stock of `package.json` to see which dependencies you'll need to add.
-- Start postgres if not running already by using opening up the [Postgres.app](https://postgresapp.com), or if using [Homebrew](https://brew.sh) you can use the command `brew services start postgresql`.
-- Run `npm run server` to start the server.
-- Run `npm run client` to start the client.
-- Navigate to `localhost:5173`.
+### Tables and Descriptions
 
-## Base Features
+#### `users`
+Manages user accounts for staff and guardians, containing login credentials and roles.
+- **Fields**: `id`, `username`, `password`, `role`, `date_created`
 
-You will need 2 views for the base features. You should put some thought into the UI and how to style it.
+#### `child_profile`
+Stores comprehensive profiles for each child, including personal identifiers and placement details.
+- **Fields**: `child_id`, `first_name`, `nick_name`, `last_name`, `date_of_birth`, `gender`, `date_of_placement`, `date_created`
 
-### Search View
+#### `guardianship`
+Links children with their legal guardians or caretakers, detailing guardianship status and CPS worker contacts.
+- **Fields**: `guardianship_id`, `user_id`, `child_id`, `form_id`, `court_order_number`, `cps_worker_name`, `cps_worker_phone`, `cps_worker_email`, `date_created`
 
-- Allow a user to enter a search string and submit a search request.
-- Query the `Giphy API Search Endpoint` with the given search string **FROM THE SERVER**.
-- Display the results on the DOM.
-- Allow a user to "favorite" any of the resulting images. You'll need to think about what information to save to your own database. Generally you only store the minimum needed to show this image again on the **Favorites View**.
+#### `health_history`
+Captures health-related information, ensuring children receive appropriate medical care and support.
+- **Fields**: `health_history_id`, `user_id`, `child_id`, `form_id`, `current_pediatrician`, `recent_doctor_visit`, `pediatrician_contact`, `dental_checkup`, `medications`, `chronic_illnesses`, `allergies`, `birth_complications`, `developmental_delays`, `date_created`
 
-### Favorites View
+#### `behavioral_history`
+Documents behavioral observations and therapeutic interventions, supporting emotional and psychological well-being.
+- **Fields**: `behavioral_history_id`, `user_id`, `child_id`, `form_id`, `reason_for_counseling`, `previous_therapy`, `trauma_history`, `sexualized_behaviors`, `bed_wetting`, `sleep_changes`, `appetite_changes`, `date_created`
 
-- Allow a user to see all of the Giphy images they have made a favorite. The actual images need to appear on the DOM.
-- Allow a user to set a category for a favorite image.
-    - Each favorite image can only have one category at a time.
-    - The category needs to be one of the categories in the database.
+#### `family_history`
+Details family backgrounds, including substance abuse and mental health issues, providing context for personalized care strategies.
+- **Fields**: `family_history_id`, `user_id`, `child_id`, `form_id`, `substance_abuse_history`, `mental_health_issues`, `date_created`
 
-## Existing Router Files
+#### `consent_forms`
+Manages consents for medical treatments, activities, and information sharing, ensuring legal compliance and guardians' informed decision-making.
+- **Fields**: `consent_form_id`, `user_id`, `child_id`, `form_id`, `consent_type`, `consent_given`, `guardian_signature`, `date_signed`, `date_created`
 
-You are given two router modules on the server with "stubs" for the routes you may need.
+#### `financial_responsibility`
+Outlines financial obligations and insurance details related to each child's care, facilitating fiscal management and support access.
+- **Fields**: `financial_responsibility_id`, `user_id`, `child_id`, `form_id`, `insurance_provider`, `insurance_id`, `medicaid_id`, `fiscal_responsibility`, `date_created`
 
-- `GET /api/categories` (complete)
-    - Returns an array of all categories from the table ordered by name.
+#### `authorization`
+Handles data sharing authorizations, ensuring sensitive information is disclosed responsibly and in accordance with privacy regulations.
+- **Fields**: `authorization_id`, `user_id`, `child_id`, `form_id`, `authorization_type`, `authorized_party`, `disclosure_details`, `date_created`
 
-- `POST /api/favorites` (incomplete)
-    - For adding a new favorite image. You'll need to think about what is needed. Does it need a category?
+#### `forms`
+Serves as a meta-table for tracking form submissions within the system, supporting document management and workflow optimization.
+- **Fields**: `form_id`, `user_id`, `child_id`, `submission_date`, `form_type`, `date_created`, `status`
 
-- `PUT /api/favorites/:id` (incomplete)
-    - For setting a category on an image. It expects both a route parameter and data body. Feel free to change it as needed.
+## Development Setup
 
-## Stretch Features
+Follow these steps to prepare the development environment:
 
-1. Allow favorites to be removed from favorites.
-1. Allow for a favorite to have **many categories** instead of just one.
-1. Implement a pagination feature for the Giphy search results.
-1. Add another view that allows a user to manage the categories:
-    - User should be able to create a new category.
-    - User should be able to edit an existing category.
-    - User should be able to delete/remove an existing category.
+- Install Node.js, PostgreSQL, and Nodemon.
+- Use the provided SQL statements to set up the initial database schema.
+- Run `npm install` to install necessary dependencies.
+- Start the server with `npm run server` and the client with `npm run client`.
+
+## Testing and Validation
+
+Testing involves using tools like Postman for API route testing and direct database inspection to ensure data integrity. This phase is crucial for verifying the system's functionality and security measures.
+
+## Future Directions
+
+Divine Passage is poised for future enhancements, including the integration of analytical tools for outcome tracking, expansion of communication features for staff and guardians, and the incorporation of advanced security protocols.
+
+## Conclusion
+
+Divine Passage represents a significant advancement in child welfare management for Divine Institute. By centralizing and securing critical information, the system ensures that every child's journey through care is supported by informed decisions and comprehensive support, embodying Divine Institute's commitment to fostering positive outcomes for all residents.
+
+For more information about Divine Institute and its mission, visit [www.divineinstitute.org/about](https://www.divineinstitute.org/about).
+
+---
